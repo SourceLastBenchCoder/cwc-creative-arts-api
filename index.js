@@ -3,6 +3,8 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 require("dotenv").config()
 
+const articleRoot = require('./routes/article')
+
 const app = express()
 
 app.use(cors())
@@ -21,11 +23,21 @@ app.get("/", (req, res) => {
     res.send({ status: "API Application Running Successfully" })
 })
 
+app.use("/api/article", articleRoot)
+
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || "Error Occurred Something went wrog"
+    return res.status(errorStatus).json({
+        success: false,
+        status: errorStatus,
+        message: errorMessage,
+        stack: err.stack
+    })
+})
+
 const PORT = process.env.PORT || 9898
 
 app.listen(PORT, () => {
     console.log(`SERVER STARTED AT PORT ${PORT}`)
 })
-
-
-
