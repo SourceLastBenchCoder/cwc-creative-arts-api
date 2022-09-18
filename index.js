@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 require("dotenv").config()
 
 const articleRoot = require('./routes/article')
+const bannerRoot = require('./routes/banner')
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/article", articleRoot)
+app.use("/api/banner", bannerRoot)
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500
