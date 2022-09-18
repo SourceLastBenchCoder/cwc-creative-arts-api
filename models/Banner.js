@@ -10,8 +10,7 @@ const BannerSchema = new mongoose.Schema({
         required: true
     },
     banner: {
-        type: String,
-        required: true
+        type: String
     },
     buttonText: {
         type: String,
@@ -26,3 +25,5 @@ const BannerSchema = new mongoose.Schema({
         required: true
     }
 })
+
+module.exports = mongoose.model("Banner", BannerSchema)
