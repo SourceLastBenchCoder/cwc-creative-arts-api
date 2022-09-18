@@ -6,18 +6,19 @@ const {
     updateBanner,
     createBanner
 } = require('../controller/banner')
+const { verifyAdmin } = require('../utils/verifyToken')
 
 
 const router = express.Router()
 
 //Create
-router.post("/", createBanner)
+router.post("/", verifyAdmin, createBanner)
 
 //update
-router.put("/:id", updateBanner)
+router.put("/:id", verifyAdmin, updateBanner)
 
 //Delete
-router.delete("/:id", deleteBanner)
+router.delete("/:id", verifyAdmin, deleteBanner)
 
 //Get All
 router.get("/", getAllBanner)

@@ -2,6 +2,9 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 require("dotenv").config()
+const cookieParser = require('cookie-parser')
+const authRoot = require('./routes/auth.js')
+const usersRoot = require('./routes/user.js')
 
 const articleRoot = require('./routes/article')
 const bannerRoot = require('./routes/banner')
@@ -11,6 +14,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true })
     .then(() => {
@@ -24,6 +28,8 @@ app.get("/", (req, res) => {
     res.send({ status: "API Application Running Successfully" })
 })
 
+app.use("/api/auth", authRoot)
+app.use("/api/users", usersRoot)
 app.use("/api/article", articleRoot)
 app.use("/api/banner", bannerRoot)
 

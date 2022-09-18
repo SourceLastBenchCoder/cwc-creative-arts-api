@@ -6,18 +6,19 @@ const {
     updateArticle,
     createArticle
 } = require('../controller/article')
+const { verifyAdmin } = require('../utils/verifyToken')
 
 
 const router = express.Router()
 
 //Create
-router.post("/", createArticle)
+router.post("/", verifyAdmin,createArticle)
 
 //update
-router.put("/:id", updateArticle)
+router.put("/:id", verifyAdmin,updateArticle)
 
 //Delete
-router.delete("/:id", deleteArticle)
+router.delete("/:id", verifyAdmin,deleteArticle)
 
 //Get All
 router.get("/", getAllArticle)
